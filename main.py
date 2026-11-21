@@ -250,6 +250,16 @@ def draw_scene():
     for yy in range(258, 746):
         blend(352, yy, 255, 255, 255, 0.35)
         blend(353, yy, 255, 255, 255, 0.18)
+    # soft vertical highlight band on the body's right side: a wide,
+    # gently fading light band that reads as a studio softbox reflection
+    # on the brushed metal (the lamp sits to the right, so the light
+    # catches this edge of the cylinder)
+    for yy in range(258, 746):
+        for dx in range(16):
+            xx = 478 + dx
+            a = 0.20 * (1.0 - abs(dx - 7) / 8.0)
+            if a > 0.0:
+                blend(xx, yy, 255, 255, 255, a)
     # head / bezel
     rrect_hgrad(330, 192, 180, 66, 14, HEAD_METAL)
     # bezel grooves
@@ -327,7 +337,10 @@ def draw_scene():
                 (255, 214, 130), alpha=0.10 + 0.05 * (9 - k) / 9.0)
     ellipse(618, 456, 20, 17, (255, 232, 170))
     ellipse(614, 452, 9, 7, (255, 246, 220))
-    # light cone: warm beam from the lamp onto the solar panel
+    # light cone: warm beam from the lamp onto the solar panel,
+    # widened and softened in three layers so the light reads clearly
+    polygon([(622, 436), (622, 476), (472, 548), (472, 332)],
+            (255, 200, 105), alpha=0.05)
     polygon([(622, 442), (622, 470), (472, 528), (472, 352)],
             (255, 205, 110), alpha=0.10)
     polygon([(622, 448), (622, 464), (472, 500), (472, 380)],
